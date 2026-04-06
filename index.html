@@ -500,7 +500,7 @@ Use stroke-dashoffset animation on SVG circles. Set final state as fallback.
 <footer class="footer">
   <div class="container">
     <div class="footer-grid" id="footerGrid"></div>
-    <div class="footer-note">Data collected for analytical purposes. All content attributed to original authors. Last updated: 2026-04-06 19:54 UTC</div>
+    <div class="footer-note">Data collected for analytical purposes. All content attributed to original authors. Last updated: April 6, 2026.</div>
   </div>
 </footer>
 
@@ -609,7 +609,7 @@ function animateCounter(el, target, duration, prefix, suffix){
     {label:'Platform Split', value:'X: 27 · R: 22 · N: 15+', sub:'Data sources', color:null, raw:null},
     {label:'Total Impressions (X)', value:'11.2M', sub:'Views across tracked tweets', color:'var(--orange)', raw:11200000},
     {label:'News Coverage', value:'15+', sub:'Unique outlets', color:'var(--purple)', raw:15},
-    {label:'Overall Sentiment', value:'~15% Positive', sub:'Blended (replies + Reddit)', color:'var(--red)', raw:null},
+    {label:'Overall Sentiment', value:'~20% Positive', sub:'Blended (111 X replies + 22 Reddit)', color:'var(--orange)', raw:null},
     {label:'Highest Engagement', value:'15,068', sub:'@jack — Single post', color:'var(--green)', raw:15068},
   ];
   var g = document.getElementById('metricsGrid');
@@ -695,8 +695,8 @@ function animateCounter(el, target, duration, prefix, suffix){
   }
   row.appendChild(makeDonut('X (Twitter) — Replies', [
     {pct:57, color:'var(--red)', label:'Negative'},
-    {pct:29, color:'var(--yellow)', label:'Neutral'},
-    {pct:14, color:'var(--green)', label:'Positive'},
+    {pct:19, color:'var(--yellow)', label:'Neutral'},
+    {pct:24, color:'var(--green)', label:'Positive'},
   ], '57% Neg'));
   row.appendChild(makeDonut('Reddit', [
     {pct:70, color:'var(--red)', label:'Negative'},
@@ -723,8 +723,8 @@ function animateCounter(el, target, duration, prefix, suffix){
 (function(){
   var row = document.getElementById('gaugesRow');
   var gauges = [
-    {label:'X — Replies', pct:14, color:'var(--red)'},
-    {label:'Overall', pct:14, color:'var(--red)'},
+    {label:'X — Replies', pct:24, color:'var(--orange)'},
+    {label:'Overall', pct:20, color:'var(--orange)'},
     {label:'Reddit', pct:15, color:'var(--red)'},
   ];
   gauges.forEach(function(g){
@@ -881,7 +881,7 @@ function animateCounter(el, target, duration, prefix, suffix){
   var g = document.getElementById('footerGrid');
   var items = [
     {title:'X Timeline', text:'27 posts via syndication API + X API v2'},
-    {title:'X Reply Threads', text:'185 replies sampled via X API v2 search (conversation_id query)'},
+    {title:'X Reply Threads', text:'185 replies collected, 36 noise + 34 irrelevant removed, 111 relevant replies classified (keyword + manual review)'},
     {title:'Reddit', text:'4 posts + 18 comments from r/CryptoCurrency, r/btc via JSON API'},
     {title:'News', text:'15+ articles from Google News RSS'},
     {title:'View Counts', text:'X API v2 (Basic tier)'},
