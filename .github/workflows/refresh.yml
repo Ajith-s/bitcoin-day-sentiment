@@ -49,24 +49,25 @@ jobs:
           "
 
       - name: Fetch Reddit data
+        continue-on-error: true
         run: |
           curl -s "https://www.reddit.com/r/CryptoCurrency/comments/1sbl2cq/.json?limit=30" \
-            -H "User-Agent: BitcoinDaySentiment/1.0" > reddit_crypto.json
-
-          curl -s "https://www.reddit.com/search.json?q=block+bitcoin+day+faucet+btc.day&t=week&sort=relevance&limit=25" \
-            -H "User-Agent: BitcoinDaySentiment/1.0" > reddit_search.json
+            -H "User-Agent: BitcoinDaySentiment/1.0" > reddit_crypto.json || true
 
           echo "=== Reddit Data ==="
           python3 -c "
           import json
-          with open('reddit_crypto.json') as f:
-              data = json.load(f)
-          if isinstance(data, list) and len(data) > 1:
-              post = data[0]['data']['children'][0]['data']
-              print(f'Main post: {post[\"score\"]} upvotes, {post[\"num_comments\"]} comments')
-              comments = data[1]['data']['children']
-              print(f'Top comments fetched: {len(comments)}')
-          "
+          try:
+              with open('reddit_crypto.json') as f:
+                  data = json.load(f)
+              if isinstance(data, list) and len(data) > 1:
+                  post = data[0]['data']['children'][0]['data']
+                  print(f'Main post: {post[\"score\"]} upvotes, {post[\"num_comments\"]} comments')
+              else:
+                  print('Reddit returned non-standard response (likely CAPTCHA)')
+          except Exception as e:
+              print(f'Reddit fetch failed (CAPTCHA likely): {e}')
+          " || true
 
       - name: Fetch Google News
         run: |
