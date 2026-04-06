@@ -414,7 +414,7 @@ Use stroke-dashoffset animation on SVG circles. Set final state as fallback.
     <p class="section-subtitle">Sentiment classification across X and Reddit</p>
     <div class="donuts-row" id="donutsRow"></div>
     <div class="summary-box">
-      Sentiment distribution varies across platforms. X posts show <strong style="color:var(--green)">100% positive</strong> classification (27 of 27 posts). Reddit posts show a mixed distribution: <strong style="color:var(--red)">70% negative</strong>, <strong style="color:var(--yellow)">15% neutral</strong>, <strong style="color:var(--green)">15% positive</strong>. <strong style="color:var(--purple)">15+ news outlets</strong> covered the announcement. Total impressions across tracked X posts: <strong style="color:var(--orange)">11.2M views</strong>.
+      X timeline posts (curated by @BitcoinatBlock) show 100% positive sentiment. However, X reply threads (185 replies sampled) show a different distribution: <strong style="color:var(--red)">57% negative</strong>, <strong style="color:var(--yellow)">29% neutral</strong>, <strong style="color:var(--green)">14% positive</strong>. Common criticisms: misleading "faucet" branding (requires purchases), technical issues (timer bugs), regional exclusion (US-only), Bitkey pricing concerns. Reddit sentiment: <strong style="color:var(--red)">70% negative</strong>, <strong style="color:var(--yellow)">15% neutral</strong>, <strong style="color:var(--green)">15% positive</strong>. <strong style="color:var(--purple)">15+ news outlets</strong> covered the announcement. Total impressions: <strong style="color:var(--orange)">11.2M views</strong>.
     </div>
   </div>
 </section>
@@ -609,7 +609,7 @@ function animateCounter(el, target, duration, prefix, suffix){
     {label:'Platform Split', value:'X: 27 · R: 22 · N: 15+', sub:'Data sources', color:null, raw:null},
     {label:'Total Impressions (X)', value:'11.2M', sub:'Views across tracked tweets', color:'var(--orange)', raw:11200000},
     {label:'News Coverage', value:'15+', sub:'Unique outlets', color:'var(--purple)', raw:15},
-    {label:'Overall Sentiment', value:'60% Positive', sub:'Blended across platforms', color:'var(--yellow)', raw:null},
+    {label:'Overall Sentiment', value:'~15% Positive', sub:'Blended (replies + Reddit)', color:'var(--red)', raw:null},
     {label:'Highest Engagement', value:'15,068', sub:'@jack — Single post', color:'var(--green)', raw:15068},
   ];
   var g = document.getElementById('metricsGrid');
@@ -693,9 +693,11 @@ function animateCounter(el, target, duration, prefix, suffix){
     wrap.appendChild(leg);
     return wrap;
   }
-  row.appendChild(makeDonut('X (Twitter)', [
-    {pct:100, color:'var(--green)', label:'Positive'}
-  ], '100%'));
+  row.appendChild(makeDonut('X (Twitter) — Replies', [
+    {pct:57, color:'var(--red)', label:'Negative'},
+    {pct:29, color:'var(--yellow)', label:'Neutral'},
+    {pct:14, color:'var(--green)', label:'Positive'},
+  ], '57% Neg'));
   row.appendChild(makeDonut('Reddit', [
     {pct:70, color:'var(--red)', label:'Negative'},
     {pct:15, color:'var(--yellow)', label:'Neutral'},
@@ -721,9 +723,9 @@ function animateCounter(el, target, duration, prefix, suffix){
 (function(){
   var row = document.getElementById('gaugesRow');
   var gauges = [
-    {label:'X (Twitter)', pct:100, color:'var(--blue)'},
-    {label:'Overall', pct:60, color:'var(--yellow)'},
-    {label:'Reddit', pct:30, color:'var(--red)'},
+    {label:'X — Replies', pct:14, color:'var(--red)'},
+    {label:'Overall', pct:14, color:'var(--red)'},
+    {label:'Reddit', pct:15, color:'var(--red)'},
   ];
   gauges.forEach(function(g){
     var wrap = document.createElement('div');
@@ -878,11 +880,12 @@ function animateCounter(el, target, duration, prefix, suffix){
 (function(){
   var g = document.getElementById('footerGrid');
   var items = [
-    {title:'X (Twitter)', text:'27 posts via syndication API + X API v2'},
+    {title:'X Timeline', text:'27 posts via syndication API + X API v2'},
+    {title:'X Reply Threads', text:'185 replies sampled via X API v2 search (conversation_id query)'},
     {title:'Reddit', text:'4 posts + 18 comments from r/CryptoCurrency, r/btc via JSON API'},
     {title:'News', text:'15+ articles from Google News RSS'},
     {title:'View Counts', text:'X API v2 (Basic tier)'},
-    {title:'Note', text:'Reddit main site blocked scraping with CAPTCHA; data accessed via .json endpoint'},
+    {title:'Note', text:'X timeline posts (curated by @BitcoinatBlock) show 100% positive. Reply threads show 57% negative. Dashboard uses reply thread sentiment for X classification.'},
   ];
   items.forEach(function(it){
     var d = document.createElement('div');
