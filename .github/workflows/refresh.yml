@@ -1,0 +1,165 @@
+name: Refresh Sentiment Data
+
+on:
+  schedule:
+    # Run every 30 minutes during Bitcoin Day week (April 6-10)
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest X API metrics
+        env:
+          BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+        run: |
+          if [ -z "$BEARER_TOKEN" ]; then
+            echo "No bearer token, skipping X API refresh"
+            exit 0
+          fi
+
+          TWEET_IDS="2040083154027823410,2040100600658960550,2040103848354947138,2040102382500004007,2040132665563582947,2040122519408001026,2040153649972904136,2040124673942524022"
+
+          curl -s "https://api.x.com/2/tweets?ids=${TWEET_IDS}&tweet.fields=public_metrics,created_at,author_id&expansions=author_id&user.fields=username,name" \
+            -H "Authorization: Bearer ${BEARER_TOKEN}" > metrics.json
+
+          echo "=== X API Response ==="
+          cat metrics.json | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)
+          if 'data' not in data:
+              print('ERROR: No data in response')
+              sys.exit(1)
+          users = {u['id']: u['username'] for u in data.get('includes', {}).get('users', [])}
+          total_impressions = 0
+          for t in data['data']:
+              m = t['public_metrics']
+              total_impressions += m['impression_count']
+              u = users.get(t['author_id'], '?')
+              print(f'@{u}: {m[\"like_count\"]:,} likes | {m[\"impression_count\"]:,} views')
+          print(f'Total impressions: {total_impressions:,}')
+          "
+
+      - name: Fetch Reddit data
+        run: |
+          curl -s "https://www.reddit.com/r/CryptoCurrency/comments/1sbl2cq/.json?limit=30" \
+            -H "User-Agent: BitcoinDaySentiment/1.0" > reddit_crypto.json
+
+          curl -s "https://www.reddit.com/search.json?q=block+bitcoin+day+faucet+btc.day&t=week&sort=relevance&limit=25" \
+            -H "User-Agent: BitcoinDaySentiment/1.0" > reddit_search.json
+
+          echo "=== Reddit Data ==="
+          python3 -c "
+          import json
+          with open('reddit_crypto.json') as f:
+              data = json.load(f)
+          if isinstance(data, list) and len(data) > 1:
+              post = data[0]['data']['children'][0]['data']
+              print(f'Main post: {post[\"score\"]} upvotes, {post[\"num_comments\"]} comments')
+              comments = data[1]['data']['children']
+              print(f'Top comments fetched: {len(comments)}')
+          "
+
+      - name: Fetch Google News
+        run: |
+          curl -s "https://news.google.com/rss/search?q=block+bitcoin+day+faucet&hl=en-US&gl=US&ceid=US:en" > news.xml
+
+          echo "=== News Articles ==="
+          python3 -c "
+          import re
+          with open('news.xml') as f:
+              data = f.read()
+          titles = re.findall(r'<title>(.*?)</title>', data)
+          sources = re.findall(r'<source[^>]*>(.*?)</source>', data)
+          count = min(len(titles)-1, len(sources))
+          print(f'Found {count} news articles')
+          for t, s in zip(titles[1:6], sources[:5]):
+              print(f'  {s}: {t}')
+          "
+
+      - name: Update dashboard HTML
+        run: |
+          python3 << 'PYEOF'
+          import json, re, datetime
+
+          # Read current HTML
+          with open('index.html', 'r') as f:
+              html = f.read()
+
+          # Update timestamp
+          now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+          html = re.sub(
+              r'Last updated:.*?<',
+              f'Last updated: {now}<',
+              html
+          )
+
+          # Try to update X metrics from API response
+          try:
+              with open('metrics.json') as f:
+                  data = json.load(f)
+              if 'data' in data:
+                  users = {u['id']: u['username'] for u in data.get('includes', {}).get('users', [])}
+                  total_impressions = sum(t['public_metrics']['impression_count'] for t in data['data'])
+                  millions = f"{total_impressions/1000000:.1f}M"
+
+                  # Update the impressions display
+                  html = re.sub(
+                      r'(id="counter-impressions"[^>]*>)[^<]*',
+                      f'\\g<1>{millions}',
+                      html
+                  )
+                  print(f'Updated impressions to {millions}')
+          except Exception as e:
+              print(f'Could not update X metrics: {e}')
+
+          # Try to update Reddit comment count
+          try:
+              with open('reddit_crypto.json') as f:
+                  rdata = json.load(f)
+              if isinstance(rdata, list) and len(rdata) > 1:
+                  post = rdata[0]['data']['children'][0]['data']
+                  score = post['score']
+                  comments = post['num_comments']
+                  print(f'Reddit main post: {score} upvotes, {comments} comments')
+          except Exception as e:
+              print(f'Could not update Reddit data: {e}')
+
+          with open('index.html', 'w') as f:
+              f.write(html)
+
+          print(f'Dashboard updated at {now}')
+          PYEOF
+
+      - name: Commit and push updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Auto-refresh: $(date -u +%Y-%m-%dT%H:%M:%SZ)" && git push)
+
+  deploy:
+    needs: refresh
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - run: git pull origin main
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
