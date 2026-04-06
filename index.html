@@ -11,7 +11,7 @@
 :root{
 --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--bg4:#22223a;
 --orange:#F7931A;--orange2:#e8850f;--green:#22c55e;--red:#ef4444;--yellow:#eab308;
---blue:#3b82f6;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+--blue:#3b82f6;--purple:#a855f7;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
 --border:#2a2a3e;
 }
 html{scroll-behavior:smooth}
@@ -39,7 +39,7 @@ section{padding:40px 0}
 .section-title{font-size:22px;font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:10px}
 .section-title .icon{color:var(--orange);font-size:20px}
 
-.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:10px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:10px}
 .metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;transition:.3s;position:relative;overflow:hidden}
 .metric-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 8px 30px rgba(247,147,26,.1)}
 .metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange);opacity:.5}
@@ -48,6 +48,7 @@ section{padding:40px 0}
 .metric-card .sub{font-size:12px;color:var(--text2);margin-top:4px}
 .metric-card.amber .value{color:var(--yellow)}
 .metric-card.green .value{color:var(--green)}
+.metric-card.purple .value{color:var(--purple)}
 
 .platform-compare{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:24px}
 .platform-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center}
@@ -80,8 +81,10 @@ section{padding:40px 0}
 .sentiment-pill.negative{background:rgba(239,68,68,.15);color:var(--red)}
 .sentiment-pill.neutral{background:rgba(234,179,8,.15);color:var(--yellow)}
 .author{font-weight:600;color:var(--text)}
-.post-text{color:var(--text2);max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.post-text{color:var(--text2);max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .engagement-num{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text)}
+.views-num{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--purple);font-size:12px}
+.views-na{font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:12px}
 .table-wrap{overflow-x:auto;background:var(--bg2);border:1px solid var(--border);border-radius:16px}
 
 .themes-container{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:20px}
@@ -92,18 +95,20 @@ section{padding:40px 0}
 .theme-bubble.neutral{background:rgba(234,179,8,.12);color:var(--yellow);border-color:rgba(234,179,8,.3)}
 .theme-bubble.large{font-size:16px;padding:12px 24px}
 .theme-bubble.medium{font-size:14px;padding:10px 20px}
+.theme-bubble.small{}
 .theme-freq{font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.7}
 
-.influencer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.influencer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .influencer-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;transition:.3s;position:relative}
 .influencer-card:hover{border-color:var(--blue);transform:translateY(-2px)}
 .influencer-card .inf-rank{position:absolute;top:12px;right:16px;font-size:24px;font-weight:900;color:rgba(59,130,246,.15);font-family:'JetBrains Mono',monospace}
 .influencer-card .inf-name{font-size:16px;font-weight:700;color:var(--blue)}
 .influencer-card .inf-stats{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--text2)}
 .influencer-card .inf-stats span{font-weight:700;color:var(--text)}
-.influencer-card .inf-stats-row{display:flex;gap:20px;margin-top:8px}
+.influencer-card .inf-stats-row{display:flex;gap:20px;margin-top:8px;flex-wrap:wrap}
 .inf-stat-item{font-size:12px;color:var(--text2)}
 .inf-stat-item .inf-stat-val{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);font-size:14px;display:block;margin-bottom:2px}
+.inf-stat-item .inf-stat-val.views-color{color:var(--purple)}
 .inf-stat-item .inf-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3)}
 
 .quotes-grid{display:grid;gap:16px}
@@ -129,7 +134,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:30px 0;m
 
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .animate-in{animation:fadeInUp .6s ease forwards}
-.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}.delay-5{animation-delay:.5s}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}.delay-5{animation-delay:.5s}.delay-6{animation-delay:.6s}
 
 @media(max-width:900px){
   .platform-compare{grid-template-columns:1fr}
@@ -151,7 +156,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:30px 0;m
   "@context": "urn:goose.ai:schema",
   "@type": "GooseApp",
   "name": "bitcoin-day-sentiment",
-  "description": "Neutral sentiment dashboard for Block's Bitcoin Day event with X & Reddit data",
+  "description": "Bitcoin Day sentiment dashboard with X/Reddit data, impressions, and engagement metrics",
   "width": 1400,
   "height": 900,
   "resizable": true,
@@ -161,23 +166,32 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:30px 0;m
 }
   </script>
   <script type="application/x-goose-prd">
-# Bitcoin Day Sentiment Analysis Dashboard — V3.1 Counter Fix
+# Bitcoin Day Sentiment Analysis Dashboard — V3.2 Impressions Update
 
 ## Overview
-A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day event (April 6, 2026). Presents X (Twitter) and Reddit data side-by-side without editorial commentary, allowing readers to draw their own conclusions.
+A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day event (April 6, 2026). Presents X (Twitter) and Reddit data side-by-side without editorial commentary, allowing readers to draw their own conclusions. Now includes real view/impression counts from the X API v2.
 
 ## Core Design Principles
 - **Neutral tone throughout** — no editorializing, opinionated language, or subjective characterizations
 - Present data factually, like a Bloomberg terminal or research report
-- Dark theme with Bitcoin orange (#F7931A) accents
+- Dark theme with Bitcoin orange (#F7931A) accents, purple (#a855f7) for view/impression data
 - Professional, modern dashboard layout
 - Responsive design
 
-## Bug Fixes (V3.1)
-1. **Counter animation fix** — Metric cards now display correct values immediately in the HTML as fallback text (42, 43,000+), then animate from 0 on top. If animation fails for any reason, the correct values are already visible.
-2. **Removed `opacity: 0` default** — The `.animate-in` class no longer starts with `opacity: 0` which was preventing content from being visible if the animation didn't trigger.
-3. **Robust initialization** — All non-chart content (tables, themes, influencers, quotes) renders immediately on script execution, not inside the Chart.js callback. Counter and gauge animations also fire immediately, independent of Chart.js loading.
-4. **Error handling** — Chart.js load failure is caught gracefully; counter and gauge animations have try/catch with fallback to final values.
+## Bug Fixes (V3.1 — Retained)
+1. **Counter animation fix** — Metric cards display correct values immediately as fallback, then animate from 0.
+2. **Removed `opacity: 0` default** — `.animate-in` no longer starts hidden.
+3. **Robust initialization** — All non-chart content renders immediately on script execution.
+4. **Error handling** — Counter and gauge animations have try/catch with fallback to final values.
+
+## V3.2 Changes — Impressions/Views Data
+1. **New metric card** — "Total Impressions (X)" showing 11.2M across 10 tracked tweets, with animated counter.
+2. **Views column in Top 10 table** — New "Views" column between Engagement and Sentiment with real X API data. Reddit posts show "—".
+3. **Views stat on influencer cards** — Each X influencer card now shows view count in purple.
+4. **Updated engagement numbers** — All X post engagement figures updated to latest API data (e.g., @jack: 15,067, @BitcoinatBlock: 13,202).
+5. **Total engagement updated** — From 43,000+ to 44,000+ reflecting latest numbers.
+6. **Footer updated** — Added "View counts retrieved via X API v2 (Basic tier)" to data collection summary.
+7. **Quote likes updated** — Notable posts quotes reflect updated engagement numbers.
 
 ## Key Changes from V2 (Neutrality Pass) — Retained
 1. Removed "KEY INSIGHT" editorial box — neutral "Platform Comparison" summary
@@ -189,24 +203,32 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
 7. Removed all subjective phrases
 
 ## Sections
-1. **Key Metrics** — 6 cards: total posts (42), platform split (X:20, R:22), total engagement (43K+), overall sentiment (60% positive), highest engagement X (@jack, 14,024), highest engagement Reddit (u/Switchbladesaint, 636)
-2. **Platform Sentiment Comparison** — Two donut charts with neutral summary box
+1. **Key Metrics** — 7 cards: total posts (42), platform split (X:20, R:22), total engagement (44K+), total impressions (11.2M), overall sentiment (60% positive), highest engagement X (@jack, 15,067), highest engagement Reddit (u/Switchbladesaint, 636)
+2. **Platform Sentiment Comparison** — Two SVG donut charts with neutral summary box (now mentions impressions)
 3. **Sentiment Scores** — Three circular gauges: X (100%), Overall (60%), Reddit (30%)
-4. **Engagement by Post** — Bar chart sorted by engagement
-5. **Top 10 Posts by Engagement** — Combined table
+4. **Engagement by Post** — Pure CSS/HTML horizontal bar chart sorted by engagement
+5. **Top 10 Posts by Engagement** — Combined table with Views column (X API data, "—" for Reddit)
 6. **Theme Analysis** — Bubble tags with frequency counts
-7. **Top Accounts by Engagement (X)** — Cards with stats only
-8. **X — Notable Posts** — Quote cards
+7. **Top Accounts by Engagement (X)** — Cards with likes, views, followers, posts
+8. **X — Notable Posts** — Quote cards with updated engagement
 9. **Reddit — Notable Comments** — Quote cards
-10. **Data Collection Summary** — Factual footer
+10. **Data Collection Summary** — Factual footer including X API v2 note
+
+## Data Sources
+- X posts: 20 collected via syndication API
+- X view counts: Retrieved via X API v2 (Basic tier) for 10 tracked tweets
+- Reddit: 4 posts + 18 comments via JSON API
+- Collection date: April 4, 2026
 
 ## Technical
-- Pure HTML/CSS/JS, single file
-- Chart.js from CDN for charts (with graceful failure handling)
-- Font Awesome + Inter + JetBrains Mono from CDN
+- Pure HTML/CSS/JS, single file — NO external JS libraries
+- Pure SVG donut charts (no Chart.js)
+- Pure CSS/HTML horizontal bar chart
+- Font Awesome + Inter + JetBrains Mono from CDN (CSS/fonts only)
 - Counter animations with immediate fallback values in HTML
+- Decimal counter animation for impressions (11.2M)
 - Gauge animations with fallback to final state
-- Non-chart content renders immediately, independent of Chart.js
+- Non-chart content renders immediately
 - Smooth scroll navigation
 - Dark mode, responsive layout
   </script>
@@ -252,10 +274,15 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
       </div>
       <div class="metric-card animate-in delay-3">
         <div class="label">Total Engagement</div>
-        <div class="value" id="counter-engagement">43,000+</div>
+        <div class="value" id="counter-engagement">44,000+</div>
         <div class="sub">Likes, upvotes, retweets</div>
       </div>
-      <div class="metric-card amber animate-in delay-4">
+      <div class="metric-card purple animate-in delay-4">
+        <div class="label">Total Impressions (X)</div>
+        <div class="value" id="counter-impressions">11.2M</div>
+        <div class="sub">Across 10 tracked tweets</div>
+      </div>
+      <div class="metric-card amber animate-in delay-5">
         <div class="label">Overall Sentiment</div>
         <div class="value">60% <span style="font-size:14px">Positive</span></div>
         <div class="sub">Blended across platforms</div>
@@ -263,9 +290,9 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
       <div class="metric-card green animate-in delay-5">
         <div class="label">Highest Engagement (X)</div>
         <div class="value" style="font-size:18px">@jack</div>
-        <div class="sub">14,024 likes</div>
+        <div class="sub">15,067 likes</div>
       </div>
-      <div class="metric-card animate-in delay-5">
+      <div class="metric-card animate-in delay-6">
         <div class="label">Highest Engagement (Reddit)</div>
         <div class="value" style="font-size:15px;color:var(--orange)">u/Switchbladesaint</div>
         <div class="sub">636 upvotes</div>
@@ -304,19 +331,16 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
         <div class="chart-wrap">
           <svg viewBox="0 0 200 200" width="220" height="220">
             <circle cx="100" cy="100" r="80" fill="none" stroke="var(--bg3)" stroke-width="30"/>
-            <!-- Negative: 70% = 351.86 of 502.65 -->
             <circle cx="100" cy="100" r="80" fill="none" stroke="var(--red)" stroke-width="30"
               stroke-dasharray="351.86 150.79" stroke-dashoffset="0"
               transform="rotate(-90 100 100)" stroke-linecap="butt">
               <animate attributeName="stroke-dashoffset" from="502.65" to="0" dur="1.2s" fill="freeze"/>
             </circle>
-            <!-- Neutral: 15% = 75.40, starts after 70% -->
             <circle cx="100" cy="100" r="80" fill="none" stroke="var(--yellow)" stroke-width="30"
               stroke-dasharray="75.40 427.25" stroke-dashoffset="-351.86"
               transform="rotate(-90 100 100)" stroke-linecap="butt">
               <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.8s" fill="freeze"/>
             </circle>
-            <!-- Positive: 15% = 75.40, starts after 85% -->
             <circle cx="100" cy="100" r="80" fill="none" stroke="var(--green)" stroke-width="30"
               stroke-dasharray="75.40 427.25" stroke-dashoffset="-427.25"
               transform="rotate(-90 100 100)" stroke-linecap="butt">
@@ -335,7 +359,7 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
     </div>
     <div class="summary-box animate-in delay-3">
       <div class="summary-label"><i class="fas fa-chart-pie"></i> Platform Comparison</div>
-      Sentiment distribution differs across platforms. X posts show 100% positive classification (20 of 20 posts). Reddit posts show a mixed distribution: 70% negative (15 of 22), 15% neutral (3 of 22), and 15% positive (4 of 22). Blended overall sentiment across both platforms is 60% positive.
+      Sentiment distribution differs across platforms. X posts show 100% positive classification (20 of 20 posts). Reddit posts show a mixed distribution: 70% negative (15 of 22), 15% neutral (3 of 22), and 15% positive (4 of 22). Blended overall sentiment across both platforms is 60% positive. Total impressions across 10 tracked X posts: 11.2M views.
     </div>
   </div>
 </section>
@@ -387,7 +411,7 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
     <div class="section-title"><span class="icon"><i class="fas fa-trophy"></i></span> Top 10 Posts by Engagement</div>
     <div class="table-wrap animate-in">
       <table class="top-posts-table" id="topPostsTable">
-        <thead><tr><th>#</th><th>Platform</th><th>Author</th><th>Text</th><th>Engagement</th><th>Sentiment</th></tr></thead>
+        <thead><tr><th>#</th><th>Platform</th><th>Author</th><th>Text</th><th>Engagement</th><th>Views</th><th>Sentiment</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -438,6 +462,7 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
       <div class="footer-item"><i class="fas fa-check-circle"></i><div><strong>Reddit:</strong> 4 posts + 18 comments from r/CryptoCurrency, r/btc, r/XGramatikInsights, r/kriptovaluta via JSON API</div></div>
       <div class="footer-item"><i class="fas fa-check-circle"></i><div><strong>Collection date:</strong> April 4, 2026</div></div>
       <div class="footer-item"><i class="fas fa-check-circle"></i><div><strong>Method:</strong> Web scraping, no paid APIs</div></div>
+      <div class="footer-item"><i class="fas fa-check-circle"></i><div><strong>View counts:</strong> Retrieved via X API v2 (Basic tier)</div></div>
       <div class="footer-item note"><i class="fas fa-exclamation-triangle"></i><div><strong>Note:</strong> Reddit data accessed via .json endpoint after main site returned CAPTCHA</div></div>
     </div>
     <div class="footer-note">₿itcoin Day Sentiment Dashboard — Data collected April 2026</div>
@@ -446,22 +471,22 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
 
 <script>
 // ============================================================
-// DATA
+// DATA (updated with latest X API numbers)
 // ============================================================
-const topPosts = [
-  {rank:1,platform:'x',author:'@jack',text:'https://btc.day',engagement:14024,sentiment:'positive'},
-  {rank:2,platform:'x',author:'@BitcoinatBlock',text:'The bitcoin faucet is back. 04.06.26',engagement:12251,sentiment:'positive'},
-  {rank:3,platform:'x',author:'@milessuter',text:"Don't be kicking yourself ten years from now (again).",engagement:4362,sentiment:'positive'},
-  {rank:4,platform:'x',author:'@CashApp',text:'This drip is different',engagement:2298,sentiment:'positive'},
-  {rank:5,platform:'x',author:'@TFTC21',text:'Block is bringing back the bitcoin faucet...',engagement:2184,sentiment:'positive'},
-  {rank:6,platform:'x',author:'@BitcoinMagazine',text:"JUST IN: Jack Dorsey's Block is launching a BTC faucet...",engagement:2097,sentiment:'positive'},
-  {rank:7,platform:'x',author:'@Square',text:'👀',engagement:1164,sentiment:'positive'},
-  {rank:8,platform:'x',author:'@pete_rizzo_',text:'WHAT AN ABSOLUTE LEGEND 🔥',engagement:1093,sentiment:'positive'},
-  {rank:9,platform:'reddit',author:'u/Switchbladesaint',text:"Wow sweet I can't wait to collect 1/8th of a penny every 6 hours...",engagement:636,sentiment:'negative'},
-  {rank:10,platform:'x',author:'@BitcoinatBlock',text:"Bitcoin isn't new to Block...",engagement:507,sentiment:'positive'},
+var topPosts = [
+  {rank:1,platform:'x',author:'@jack',text:'https://btc.day',engagement:15067,views:2637233,sentiment:'positive'},
+  {rank:2,platform:'x',author:'@BitcoinatBlock',text:'The bitcoin faucet is back. 04.06.26',engagement:13202,views:6461653,sentiment:'positive'},
+  {rank:3,platform:'x',author:'@milessuter',text:"Don't be kicking yourself ten years from now (again).",engagement:4379,views:978160,sentiment:'positive'},
+  {rank:4,platform:'x',author:'@CashApp',text:'This drip is different',engagement:2419,views:436276,sentiment:'positive'},
+  {rank:5,platform:'x',author:'@TFTC21',text:'Block is bringing back the bitcoin faucet...',engagement:2416,views:268297,sentiment:'positive'},
+  {rank:6,platform:'x',author:'@BitcoinMagazine',text:"JUST IN: Jack Dorsey's Block is launching a BTC faucet...",engagement:2119,views:142655,sentiment:'positive'},
+  {rank:7,platform:'x',author:'@Square',text:'\u{1F440}',engagement:1204,views:141728,sentiment:'positive'},
+  {rank:8,platform:'x',author:'@pete_rizzo_',text:'WHAT AN ABSOLUTE LEGEND \u{1F525}',engagement:1147,views:78355,sentiment:'positive'},
+  {rank:9,platform:'reddit',author:'u/Switchbladesaint',text:"Wow sweet I can't wait to collect 1/8th of a penny every 6 hours...",engagement:636,views:null,sentiment:'negative'},
+  {rank:10,platform:'x',author:'@BitcoinatBlock',text:"Bitcoin isn't new to Block...",engagement:507,views:null,sentiment:'positive'},
 ];
 
-const themes = [
+var themes = [
   {text:'bitcoin faucet',sentiment:'positive',size:'large',freq:12},
   {text:'free bitcoin',sentiment:'positive',size:'large',freq:10},
   {text:'excitement',sentiment:'positive',size:'medium',freq:8},
@@ -487,23 +512,23 @@ const themes = [
   {text:'discussion',sentiment:'neutral',size:'small',freq:3},
 ];
 
-const influencers = [
-  {name:'@jack',likes:14024,followers:'6.9M',posts:1},
-  {name:'@BitcoinatBlock',likes:12251,followers:'21K',posts:2},
-  {name:'@milessuter',likes:4362,followers:'32K',posts:1},
-  {name:'@CashApp',likes:2298,followers:'2M',posts:1},
-  {name:'@TFTC21',likes:2184,followers:'104K',posts:1},
+var influencers = [
+  {name:'@jack',likes:15067,followers:'6.9M',posts:1,views:2637233},
+  {name:'@BitcoinatBlock',likes:13202,followers:'21K',posts:2,views:6461653},
+  {name:'@milessuter',likes:4379,followers:'32K',posts:1,views:978160},
+  {name:'@CashApp',likes:2419,followers:'2M',posts:1,views:436276},
+  {name:'@TFTC21',likes:2416,followers:'104K',posts:1,views:268297},
 ];
 
-const quotesXData = [
-  {author:'@pete_rizzo_',text:"BREAKING: BILLIONAIRE JACK DORSEY'S BLOCK JUST ANNOUNCED IT WILL GIVE AWAY FREE #BITCOIN... WHAT AN ABSOLUTE LEGEND 🔥",likes:'1,093',sentiment:'positive'},
+var quotesXData = [
+  {author:'@pete_rizzo_',text:"BREAKING: BILLIONAIRE JACK DORSEY'S BLOCK JUST ANNOUNCED IT WILL GIVE AWAY FREE #BITCOIN... WHAT AN ABSOLUTE LEGEND \u{1F525}",likes:'1,147',sentiment:'positive'},
   {author:'@BittyRunes',text:'The future is Bitcoin. The future is now. @jack',likes:'12',sentiment:'positive'},
-  {author:'@milessuter',text:"Don't be kicking yourself ten years from now (again).",likes:'4,362',sentiment:'positive'},
-  {author:'@CRPainting',text:'I did my first purchase buying bitcoin at cash app 👍🏼😎',likes:'58',sentiment:'positive'},
-  {author:'@TFTC21',text:"That's $500,000 per person at today's prices.",likes:'2,184',sentiment:'positive'},
+  {author:'@milessuter',text:"Don't be kicking yourself ten years from now (again).",likes:'4,379',sentiment:'positive'},
+  {author:'@CRPainting',text:'I did my first purchase buying bitcoin at cash app \u{1F44D}\u{1F3FC}\u{1F60E}',likes:'58',sentiment:'positive'},
+  {author:'@TFTC21',text:"That's $500,000 per person at today's prices.",likes:'2,416',sentiment:'positive'},
 ];
 
-const quotesRedditData = [
+var quotesRedditData = [
   {author:'u/Switchbladesaint',text:"Wow sweet I can't wait to collect 1/8th of a penny every 6 hours by watching 30 seconds of ads",upvotes:'636',sub:'r/CryptoCurrency',sentiment:'negative'},
   {author:'u/Meadowsauce',text:"Not free if it's earned. Remember people, nothing is free. If something seems like it's free that just means that YOU are the product",upvotes:'18',sub:'r/CryptoCurrency',sentiment:'negative'},
   {author:'u/eldron2323',text:'Bots are going to ruin this. We did this with Banano and it was so hard to stop bots from draining the faucet',upvotes:'33',sub:'r/CryptoCurrency',sentiment:'negative'},
@@ -511,9 +536,9 @@ const quotesRedditData = [
   {author:'u/raykuilu',text:'This is not a faucet, this is a marketing operation asking you to buy on their platform Block.',upvotes:'3',sub:'r/CryptoCurrency',sentiment:'negative'},
 ];
 
-const timelineData = {
-  labels: ['@jack','@BitcoinatBlock','@milessuter','@CashApp','@TFTC21','@BitcoinMag','@Square','@pete_rizzo_','u/Switchblade','@BitcoinatBlock₂','u/Toraadoraa','u/eldron2323','u/Meadowsauce','@CRPainting','@BittyRunes','u/raykuilu'],
-  engagement: [14024,12251,4362,2298,2184,2097,1164,1093,636,507,72,33,18,58,12,3],
+var timelineData = {
+  labels: ['@jack','@BitcoinatBlock','@milessuter','@CashApp','@TFTC21','@BitcoinMag','@Square','@pete_rizzo_','u/Switchblade','@BitcoinatBlock\u2082','u/Toraadoraa','u/eldron2323','u/Meadowsauce','@CRPainting','@BittyRunes','u/raykuilu'],
+  engagement: [15067,13202,4379,2419,2416,2119,1204,1147,636,507,72,33,18,58,12,3],
   platforms: ['x','x','x','x','x','x','x','x','reddit','x','reddit','reddit','reddit','x','x','reddit']
 };
 
@@ -524,11 +549,9 @@ function animateCounter(elementId, target, suffix) {
   var el = document.getElementById(elementId);
   if (!el) return;
 
-  // Set the final value immediately as fallback
   var finalText = target.toLocaleString() + (suffix || '');
   el.textContent = finalText;
 
-  // Now try to animate from 0 to target
   try {
     var duration = 1500;
     var startTime = null;
@@ -537,23 +560,52 @@ function animateCounter(elementId, target, suffix) {
       if (!startTime) startTime = timestamp;
       var elapsed = timestamp - startTime;
       var progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
       var eased = 1 - Math.pow(1 - progress, 3);
       var current = Math.round(eased * target);
       el.textContent = current.toLocaleString() + (suffix || '');
       if (progress < 1) {
         requestAnimationFrame(tick);
       } else {
-        // Ensure final value is exact
         el.textContent = finalText;
       }
     }
 
-    // Reset to 0 and start animation
     el.textContent = '0' + (suffix || '');
     requestAnimationFrame(tick);
   } catch (e) {
-    // If animation fails for any reason, the fallback value is already set
+    el.textContent = finalText;
+  }
+}
+
+function animateCounterDecimal(elementId, targetMil, suffix) {
+  var el = document.getElementById(elementId);
+  if (!el) return;
+
+  var finalText = targetMil + (suffix || '');
+  el.textContent = finalText;
+
+  try {
+    var duration = 1500;
+    var startTime = null;
+    var targetNum = parseFloat(targetMil);
+
+    function tick(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = (eased * targetNum).toFixed(1);
+      el.textContent = current + (suffix || '');
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = finalText;
+      }
+    }
+
+    el.textContent = '0.0' + (suffix || '');
+    requestAnimationFrame(tick);
+  } catch (e) {
     el.textContent = finalText;
   }
 }
@@ -567,14 +619,11 @@ function animateGauges() {
     var totalLen = parseFloat(arc.getAttribute('stroke-dasharray'));
     var targetOffset = totalLen * (1 - pct);
 
-    // Set final state immediately as fallback
     arc.setAttribute('stroke-dashoffset', targetOffset);
 
-    // Now animate
     try {
       var duration = 1500;
       var startTime = null;
-      // Reset to full offset (hidden)
       arc.setAttribute('stroke-dashoffset', totalLen);
 
       function tick(timestamp) {
@@ -605,12 +654,19 @@ function renderTopPosts() {
   var tbody = document.querySelector('#topPostsTable tbody');
   topPosts.forEach(function(p) {
     var tr = document.createElement('tr');
+    var viewsCell = '';
+    if (p.views !== null) {
+      viewsCell = '<span class="views-num"><i class="fas fa-eye" style="font-size:10px;margin-right:3px;opacity:.7"></i>' + p.views.toLocaleString() + '</span>';
+    } else {
+      viewsCell = '<span class="views-na">\u2014</span>';
+    }
     tr.innerHTML =
       '<td><span class="rank">' + p.rank + '</span></td>' +
       '<td><span class="platform-badge ' + p.platform + '">' + (p.platform === 'x' ? '<i class="fa-brands fa-x-twitter"></i> X' : '<i class="fa-brands fa-reddit"></i> Reddit') + '</span></td>' +
       '<td><span class="author">' + p.author + '</span></td>' +
       '<td><span class="post-text">' + p.text + '</span></td>' +
       '<td><span class="engagement-num">' + p.engagement.toLocaleString() + '</span></td>' +
+      '<td>' + viewsCell + '</td>' +
       '<td><span class="sentiment-pill ' + p.sentiment + '">' + p.sentiment + '</span></td>';
     tbody.appendChild(tr);
   });
@@ -622,7 +678,7 @@ function renderThemes() {
   shuffled.forEach(function(t) {
     var el = document.createElement('span');
     el.className = 'theme-bubble ' + t.sentiment + ' ' + t.size;
-    el.innerHTML = t.text + ' <span class="theme-freq">×' + t.freq + '</span>';
+    el.innerHTML = t.text + ' <span class="theme-freq">\u00D7' + t.freq + '</span>';
     container.appendChild(el);
   });
 }
@@ -639,6 +695,10 @@ function renderInfluencers() {
         '<div class="inf-stat-item">' +
           '<span class="inf-stat-val">' + inf.likes.toLocaleString() + '</span>' +
           '<span class="inf-stat-label">Total Likes</span>' +
+        '</div>' +
+        '<div class="inf-stat-item">' +
+          '<span class="inf-stat-val views-color">' + inf.views.toLocaleString() + '</span>' +
+          '<span class="inf-stat-label">Views</span>' +
         '</div>' +
         '<div class="inf-stat-item">' +
           '<span class="inf-stat-val">' + inf.followers + '</span>' +
@@ -659,7 +719,7 @@ function renderQuotesX() {
     var card = document.createElement('div');
     card.className = 'quote-card ' + q.sentiment + ' animate-in';
     card.innerHTML =
-      '<div class="q-text">"' + q.text + '"</div>' +
+      '<div class="q-text">\u201C' + q.text + '\u201D</div>' +
       '<div class="q-meta">' +
         '<span class="q-author">' + q.author + '</span>' +
         '<span class="q-engagement"><i class="fas fa-heart"></i> ' + q.likes + '</span>' +
@@ -675,7 +735,7 @@ function renderQuotesReddit() {
     var card = document.createElement('div');
     card.className = 'quote-card reddit-quote ' + q.sentiment + ' animate-in';
     card.innerHTML =
-      '<div class="q-text">"' + q.text + '"</div>' +
+      '<div class="q-text">\u201C' + q.text + '\u201D</div>' +
       '<div class="q-meta">' +
         '<span><span class="q-author">' + q.author + '</span><span class="q-sub">' + q.sub + '</span></span>' +
         '<span class="q-engagement"><i class="fas fa-arrow-up"></i> ' + q.upvotes + '</span>' +
@@ -693,16 +753,13 @@ function renderBarChart() {
   if (!container) return;
   var maxVal = Math.max.apply(null, timelineData.engagement);
 
-  // Build the entire chart as an HTML string and inject it
   var html = '';
 
-  // Legend
   html += '<div style="display:flex;gap:16px;justify-content:flex-end;margin-bottom:12px;font-size:12px;color:#64748b">';
   html += '<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#3b82f6;margin-right:4px;vertical-align:middle"></span>X (Twitter)</span>';
   html += '<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#F7931A;margin-right:4px;vertical-align:middle"></span>Reddit</span>';
   html += '</div>';
 
-  // Bars — use horizontal layout (easier to render reliably)
   for (var i = 0; i < timelineData.engagement.length; i++) {
     var val = timelineData.engagement[i];
     var pct = Math.max((val / maxVal) * 100, 0.5);
@@ -726,21 +783,18 @@ function renderBarChart() {
 // ============================================================
 // INITIALIZATION
 // ============================================================
-// Step 1: Render all non-chart content immediately
 renderTopPosts();
 renderThemes();
 renderInfluencers();
 renderQuotesX();
 renderQuotesReddit();
 
-// Step 2: Animate counters immediately (they have fallback values in HTML already)
 animateCounter('counter-total', 42, '');
-animateCounter('counter-engagement', 43000, '+');
+animateCounter('counter-engagement', 44000, '+');
+animateCounterDecimal('counter-impressions', '11.2', 'M');
 
-// Step 3: Animate gauges immediately
 animateGauges();
 
-// Step 4: Render pure CSS bar chart (no external dependencies)
 renderBarChart();
 </script>
 </body>
