@@ -273,14 +273,9 @@ A data-driven, neutral sentiment analysis dashboard for Block's Bitcoin Day even
         <div class="sub">Posts per platform</div>
       </div>
       <div class="metric-card animate-in delay-3">
-        <div class="label">Total Engagement</div>
-        <div class="value" id="counter-engagement">44,000+</div>
-        <div class="sub">Likes, upvotes, retweets</div>
-      </div>
-      <div class="metric-card purple animate-in delay-4">
         <div class="label">Total Impressions (X)</div>
-        <div class="value" id="counter-impressions">11.2M</div>
-        <div class="sub">Across 10 tracked tweets</div>
+        <div class="value" id="counter-impressions" style="color:var(--orange)">11.2M</div>
+        <div class="sub">Views across 10 tweets</div>
       </div>
       <div class="metric-card amber animate-in delay-5">
         <div class="label">Overall Sentiment</div>
@@ -790,7 +785,6 @@ renderQuotesX();
 renderQuotesReddit();
 
 animateCounter('counter-total', 42, '');
-animateCounter('counter-engagement', 44000, '+');
 animateCounterDecimal('counter-impressions', '11.2', 'M');
 
 animateGauges();
