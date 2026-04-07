@@ -201,7 +201,7 @@ A comprehensive, neutral, data-driven sentiment analysis dashboard for Block's B
 ## SECTION 1: Key Metrics Bar (6 cards in a grid)
 1. Total Sources: 80+ | Sub: "Posts, comments, articles"
 2. Platform Split: X: 27 | Reddit: 22 | News: 15+ | Sub: "Data sources"
-3. Total Impressions (X): 11.2M | Sub: "Views across tracked tweets" | Color: orange
+3. Total Impressions (X): 12.0M | Sub: "Views across tracked tweets" | Color: orange
 4. News Coverage: 15+ | Sub: "Unique outlets" | Color: purple
 5. Overall Sentiment: 60% Positive | Sub: "Blended across platforms" | Color: yellow
 6. Highest Engagement: @jack 15,068 likes | Sub: "Single post"
@@ -213,6 +213,8 @@ Show today's live tweets as cards:
 Data (render via JS):
 ```js
 var liveTweets = [
+  {author:'@BitcoinatBlock', text:'"it\'s not a faucet" "it\'s just marketing" "it\'s not free" — Meanwhile we\'ve given away $250k+ in bitcoin today across @CashApp, @Square, and @Bitkey.', likes:534},
+  {author:'@milessuter', text:'Just getting started.', likes:419},
   {author:'@jackiestacks28', text:'The bitcoin faucet is back (iykyk) 👀 To celebrate, we\'re giving away $1M in bitcoin for Bitcoin Day.', likes:1009},
   {author:'@CashApp', text:'Bitcoin Day is live. $1M in BTC across @CashApp, @Square, and @Bitkey. Earn sats by using bitcoin, in real time.', likes:467},
   {author:'@BitcoinatBlock', text:'$25 in bitcoin for spending $1. Not a typo. Use @CashApp to pay with bitcoin at a Square seller and get $25 in bitcoin back.', likes:457},
@@ -231,7 +233,7 @@ Two SVG donut charts side by side (use stroke-dasharray on circles, NOT canvas):
 Each donut: SVG viewBox="0 0 200 200", circle r=80, stroke-width=30, with text labels in center.
 Legend dots below each donut.
 
-Summary box below: "Sentiment distribution varies across platforms. X posts show 100% positive classification (27 of 27 posts). Reddit posts show a mixed distribution: 70% negative, 15% neutral, 15% positive. 15+ news outlets covered the announcement. Total impressions across tracked X posts: 11.2M views."
+Summary box below: "Sentiment distribution varies across platforms. X posts show 100% positive classification (27 of 27 posts). Reddit posts show a mixed distribution: 70% negative, 15% neutral, 15% positive. 15+ news outlets covered the announcement. Total impressions across tracked X posts: 12.0M views."
 
 ## SECTION 4: News Coverage
 Grid of news article cards (3 columns). Each card shows source name (bold), headline, and date.
@@ -347,7 +349,7 @@ Quote cards with red left border for negative, green for positive. Show author, 
 - Reddit: 4 posts + 18 comments from r/CryptoCurrency, r/btc via JSON API
 - News: 15+ articles from Google News RSS
 - View counts: X API v2 (Basic tier)
-- Last updated: April 6, 2026
+- Last updated: April 7, 2026
 - Note: Reddit main site blocked scraping with CAPTCHA; data accessed via .json endpoint
 
 ## COUNTER ANIMATIONS
@@ -414,7 +416,7 @@ Use stroke-dashoffset animation on SVG circles. Set final state as fallback.
     <p class="section-subtitle">Sentiment classification across X and Reddit</p>
     <div class="donuts-row" id="donutsRow"></div>
     <div class="summary-box">
-      X reply threads (114 relevant replies after noise/irrelevant removal): <strong style="color:var(--green)">55% positive</strong>, <strong style="color:var(--red)">45% negative</strong>. Top negative themes: "scam" accusations, timer bugs, regional exclusion (US-only), Bitkey pricing. Reddit (22 posts/comments): <strong style="color:var(--red)">70% negative</strong>, <strong style="color:var(--yellow)">15% neutral</strong>, <strong style="color:var(--green)">15% positive</strong>. <strong style="color:var(--purple)">15+ news outlets</strong> covered the announcement. Total impressions: <strong style="color:var(--orange)">11.2M views</strong>. Classification rule: positive unless concrete evidence of negativity.
+      X reply threads (114 relevant replies after noise/irrelevant removal): <strong style="color:var(--green)">55% positive</strong>, <strong style="color:var(--red)">45% negative</strong>. Top negative themes: "scam" accusations, timer bugs, regional exclusion (US-only), Bitkey pricing. Reddit (26 posts/comments): <strong style="color:var(--red)">70% negative</strong>, <strong style="color:var(--yellow)">15% neutral</strong>, <strong style="color:var(--green)">15% positive</strong>. <strong style="color:var(--purple)">15+ news outlets</strong> covered the announcement. Total impressions: <strong style="color:var(--orange)">12.0M views</strong>. Classification rule: positive unless concrete evidence of negativity.
     </div>
   </div>
 </section>
@@ -500,7 +502,7 @@ Use stroke-dashoffset animation on SVG circles. Set final state as fallback.
 <footer class="footer">
   <div class="container">
     <div class="footer-grid" id="footerGrid"></div>
-    <div class="footer-note">Data collected for analytical purposes. All content attributed to original authors. Last updated: 2026-04-07 18:31 UTC</div>
+    <div class="footer-note">Data collected for analytical purposes. All content attributed to original authors. Last updated: April 7, 2026.</div>
   </div>
 </footer>
 
@@ -607,9 +609,9 @@ function animateCounter(el, target, duration, prefix, suffix){
   var metrics = [
     {label:'Total Sources', value:'80+', sub:'Posts, comments, articles', color:null, raw:80},
     {label:'Platform Split', value:'X: 27 · R: 22 · N: 15+', sub:'Data sources', color:null, raw:null},
-    {label:'Total Impressions (X)', value:'11.2M', sub:'Views across tracked tweets', color:'var(--orange)', raw:11200000},
+    {label:'Total Impressions (X)', value:'12.0M', sub:'Views across tracked tweets', color:'var(--orange)', raw:12000000},
     {label:'News Coverage', value:'15+', sub:'Unique outlets', color:'var(--purple)', raw:15},
-    {label:'Overall Sentiment', value:'~40% Positive', sub:'Blended (114 X replies + 22 Reddit)', color:'var(--yellow)', raw:null},
+    {label:'Overall Sentiment', value:'~40% Positive', sub:'Blended (114 X replies + 26 Reddit)', color:'var(--yellow)', raw:null},
     {label:'Highest Engagement', value:'15,068', sub:'@jack — Single post', color:'var(--green)', raw:15068},
   ];
   var g = document.getElementById('metricsGrid');
@@ -965,10 +967,10 @@ function animateCounter(el, target, duration, prefix, suffix){
         var raw = e.target.dataset.raw;
         if(raw && !isNaN(parseInt(raw))){
           var target = parseInt(raw);
-          if(idx === 2){ // 11.2M
+          if(idx === 2){ // 12.0M
             animateCounter(e.target, target, 1500, '', '');
             // Override with formatted
-            setTimeout(function(){ e.target.textContent = '11.2M'; }, 1600);
+            setTimeout(function(){ e.target.textContent = '12.0M'; }, 1600);
           } else if(idx === 5){ // 15,068
             animateCounter(e.target, target, 1200, '', '');
           } else if(idx === 0){ // 80+
